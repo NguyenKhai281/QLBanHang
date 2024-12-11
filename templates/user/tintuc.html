@@ -1,0 +1,20 @@
+{% extends "user/include/menu.html" %}
+{% block title %}Tien Duc shop{% endblock %}
+{% block csslink %}<link rel="stylesheet" href="{{ url_for('static', filename='css/user/tintuc.css') }}">{% endblock %}
+{% block content %}
+<div class="news-container">
+    <h1>Tin Tức Mới Nhất</h1>
+    {% for i in listtintuc %}
+    <!-- Tin tức mẫu -->
+    <div class="news-item">
+        <img src="{{ url_for('static', filename='img/news/' + i['img']) }}" alt="Tin tức 1">
+        <div class="news-content">
+            <h2>{{ i['title'] }}</h2>
+            <p>{{ i['content'] }}</p>
+            <span class="news-meta">Ngày đăng: {{ i['created_day'] }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+{% endblock %}

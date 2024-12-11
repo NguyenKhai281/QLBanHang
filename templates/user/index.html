@@ -1,0 +1,57 @@
+{% extends "user/include/menu.html" %}
+{% block title %}Tien Duc shop{% endblock %}
+
+{% block content %}
+<img src="https://luuquangtri.github.io/phukiengiabuon/images/banner.png" alt="banner" style="width: 100%;">
+
+<div class="container">
+    <div class="banner_bottom">
+        <div class="col-md-12 banner_right">
+            <div class="banner_fix">
+                <div class="banner_1">
+                    <a href="#"><img src="{{ url_for('static', filename='img/baner/baner.png')}}"></a>
+                </div>
+                <div class="banner_1" style="margin-top: 10px;">
+                    <a href="#"><img src="{{ url_for('static', filename='img/baner/banner1.png')}}"></a>
+                </div>
+                <div class="banner_1" style="margin-top: 10px;">
+                    <a href="#"><img src="{{ url_for('static', filename='img/baner/banner2.png')}}"></a>
+                </div>
+                <div class="banner_1">
+                    <a href="#"><img src="{{ url_for('static', filename='img/baner/banner1.png')}}"></a>
+                </div>
+                <div class="banner_1" style="margin-top: 10px;">
+                    <a href="#"><img src="{{ url_for('static', filename='img/baner/baner.png')}}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    {% for i in listdanhmuc %}
+        <div class="product">
+            <div class="container">
+                <h1>{{ i['nameproduct'] }}</h1>
+                <div class="row m-0 p-0 row-2">
+                    {% for j in listsanpham %}
+                        {% if j['type_product'] == i['id'] %}
+                        <div class="col-md-3 col-xs-6 product_item">
+                            <a class="stop-btn" href="/chitietsanpham/{{ j['id'] }}">
+                                <div class="product_item_a">
+                                    <img src="{{ url_for('static', filename='img/products/' + j['img']) }}">
+                                    <div class="product_body">
+                                        <h4 class="product_title">{{ j['nameproduct'] }}</h4>
+                                        <p class="product_text">{{ j['price'] }} <span style="color: #8b7f7f">{{ j['price'] * 2 }}đ</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

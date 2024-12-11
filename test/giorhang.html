@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        table td img {
+            width: 60px;
+            height: auto;
+            border-radius: 4px;
+        }
+        .actions a {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        .buy-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .buy-btn:hover {
+            background-color: #45a049;
+        }
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .cancel-btn:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cart-container">
+        <h1>Giỏ Hàng</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dòng mẫu sản phẩm -->
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/60" alt="Điện thoại XYZ">
+                    </td>
+                    <td>Điện thoại XYZ</td>
+                    <td>8,000,000 VND</td>
+                    <td>1</td>
+                    <td>8,000,000 VND</td>
+                    <td class="actions">
+                        <a href="/buy/1" class="buy-btn">Mua</a>
+                        <a href="/cancel/1" class="cancel-btn">Hủy</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/60" alt="Tai nghe Bluetooth">
+                    </td>
+                    <td>Tai nghe Bluetooth</td>
+                    <td>1,500,000 VND</td>
+                    <td>2</td>
+                    <td>3,000,000 VND</td>
+                    <td class="actions">
+                        <a href="/buy/2" class="buy-btn">Mua</a>
+                        <a href="/cancel/2" class="cancel-btn">Hủy</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/60" alt="Sạc dự phòng">
+                    </td>
+                    <td>Sạc dự phòng</td>
+                    <td>500,000 VND</td>
+                    <td>1</td>
+                    <td>500,000 VND</td>
+                    <td class="actions">
+                        <a href="/buy/3" class="buy-btn">Mua</a>
+                        <a href="/cancel/3" class="cancel-btn">Hủy</a>
+                    </td>
+                </tr>
+                <!-- Kết thúc dòng mẫu -->
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

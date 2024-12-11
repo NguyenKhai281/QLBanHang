@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Call with Button</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #danhmuc-container {
+            list-style: none;
+            padding: 0;
+        }
+        #danhmuc-container li {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>AJAX Call Demo</h1>
+    <button id="load-data-btn">Load Data</button>
+    <ul id="danhmuc-container">
+        <!-- Dữ liệu sẽ được hiển thị tại đây -->
+    </ul>
+
+    <script>
+        // Hàm gọi AJAX đến backend
+        async function loadData() {
+            try {
+                // Hiển thị thông báo loading
+                const container = document.getElementById('danhmuc-container');
+                container.innerHTML = '<li>Loading...</li>';
+
+                const response = await fetch('/get_data', {
+                    method: 'GET',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json(); // Parse JSON từ backend
+
+                // Hiển thị dữ liệu lên giao diện
+                if (data.length === 0) {
+                    container.innerHTML = '<li>No data available</li>';
+                } else {
+                    container.innerHTML = data.map(item => `<li>${item.name}</li>`).join('');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('danhmuc-container').innerHTML = '<li>Error loading data</li>';
+            }
+        }
+
+        // Gắn sự kiện click cho nút
+        document.getElementById('load-data-btn').addEventListener('click', loadData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+/* Thẻ chứa thông tin */
+.profile-card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    width: 97%;
+    text-align: center;
+}
+
+/* Ảnh đại diện */
+.profile-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề */
+.profile-card h2 {
+    font-size: 24px;
+    color: #007bff;
+    margin: 10px 0;
+}
+
+/* Thông tin cá nhân */
+.profile-card p {
+    font-size: 16px;
+    color: #333;
+    margin: 5px 0;
+}
+
+/* Thông tin có biểu tượng */
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.info-item i {
+    font-size: 20px;
+    color: #007bff;
+    margin-right: 10px;
+}

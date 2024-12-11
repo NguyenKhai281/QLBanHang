@@ -1,0 +1,228 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Sản phẩm-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/danhmuc.css') }}">
+{% endblock %}
+{% block content %}
+<h2 style="text-align: center; color: red;">Danh mục sản phẩm</h2>
+<!-- Filter Section -->
+<div class="filter-container">
+    <div class="filter-input-container">
+        <input 
+            type="text" 
+            id="filter-input" 
+            class="filter-input" 
+            placeholder="Nhập tên danh mục để tìm kiếm..." 
+            onkeyup="filterTable()">
+        <i class="fas fa-search filter-icon"></i>
+    </div>
+    <div class="action-buttons">
+        <button class="clear-btn" onclick="clearFilter()">Xóa lọc</button>
+        <button class="add-btn" onclick="openAddPopup()">Thêm sản phẩm</button>
+    </div>
+</div>
+
+<table class="product-category-table" id="product-table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th style="display: none;">Tên sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Hình ảnh</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Đã bán</th>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+            <th>Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in listsanpham %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td style="display: none;">{{ i['nameproduct'] }}</td>
+            <td>
+                <span class="product-description1" data-full-description="{{ i['nameproduct'] }}"></span>
+            </td>
+            <td>
+                <img src="{{ url_for('static', filename='img/products/' + i['img']) }}" alt="{{ i['nameproduct'] }}" class="product-image">
+            </td>
+            <td>{{ i['price'] }}</td>
+            <td>{{ i['quantity'] }}</td> <!-- số lượng sp -->
+            <td>{{ i['sold'] }}</td> <!-- số lượng sp đã bán -->
+            <td>
+                <span class="product-description" data-full-description="{{ i['describe'] }}"></span> <!-- mô tả -->
+            </td>
+            <td>{{ i['create_day'] }}</td> <!-- thời gian tạo -->
+            <td>
+                <button class="edit-btn" onclick="openPopup('{{ i['id'] }}', '{{ i['nameproduct'] }}', '{{ i['quantity'] }}', '{{ i['describe'] }}', '{{ i['type_product'] }}', '{{ i['price'] }}')">Sửa</button>
+                <a class="delete-btn" href="/admin/xoasanpham/{{ i['id'] }}" style="text-decoration: none;">Xóa</a>
+                {% if i['status'] == 'true' %}
+                        <a class="stop-btn" href="/admin/suatrangthaisanpham/{{ i['id'] }}?status={{ i['status'] }}" style="text-decoration: none;">Tạm dừng</a>
+                {% else %}
+                    <a class="stop-btn" href="/admin/suatrangthaisanpham/{{ i['id'] }}?status={{ i['status'] }}" style="text-decoration: none; background-color: #939200;">Khởi động</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table><br>
+
+<!-- Popup detail -->
+<div class="popup-overlay" id="popup-overlay"></div>
+<div class="popup" id="details-popup">
+    <h3>Chi tiết Mô tả</h3>
+    <p id="popup-content"></p>
+    <button class="close-btn" style="background-color: red; color: white; font-size: 0.9em;" onclick="closePopupDetail()">Đóng</button>
+</div>
+
+<!-- Add Popup -->
+<div class="popup" id="add-popup">
+    <h3>Thêm Sản Phẩm</h3>
+    <form id="add-category-form" action="/admin/themsanpham" method="POST" enctype="multipart/form-data">
+        <label for="loaisanpham">Loại Sản Phẩm</label>
+        <select id="loaisanpham" class="loaisanpham" name="loaisanpham">
+            {% for i in listdanhmuc %}
+                <option value="{{ i['id'] }}">{{ i['nameproduct'] }}</option>
+            {% endfor %}
+        </select>
+        <label for="tensanpham">Tên Sản Phẩm</label>
+        <input type="text" id="new-category-name" name="tensanpham" required>
+        <label for="soluon">Số lượng</label>
+        <input type="number" id="new-category-name" name="soluong" step="1" min="0" value="0" required>
+        <label for="soluon">Giá</label>
+        <input type="text" id="new-category-name" name="dongia" required>
+        <label for="mota">Mô tả</label>
+        <input type="text" id="new-category-name" name="mota" required>
+        <label for="new-category-image">Hình Ảnh</label>
+        <input type="file" id="new-category-image" name="new-category-image" required>
+        <div>
+            <button type="submit" class="save-btn">Lưu</button>
+            <button type="button" class="cancel-btn" onclick="closeAddPopup()">Hủy</button>
+        </div>
+    </form>
+</div>
+
+<!-- Edit Popup -->
+<div class="popup" id="popup">
+    <h3>Sửa Sản Phẩm</h3>
+    <form id="add-category-form" action="/admin/suasanpham" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="idsp" id="idsp" class="idsp">
+        <label for="loaisanpham">Loại Sản Phẩm</label>
+        <select id="loaisanpham" class="loaisanpham" name="loaisanpham">
+            {% for i in listdanhmuc %}
+                <option value="{{ i['id'] }}">{{ i['nameproduct'] }}</option>
+            {% endfor %}
+        </select>
+        <label for="category-name">Tên Sản Phẩm</label>
+        <input type="text" id="category-name" name="category-name">
+        <label for="soluong">Số lượng</label>
+        <input type="number" id="soluong" name="soluong" step="1" min="0" value="0" required>
+        <label for="soluon">Giá</label>
+        <input type="text" id="dongia" name="dongia" required>
+        <label for="mota">Mô tả</label>
+        <input type="text" id="mota" name="mota" required>
+        <label for="category-image">Hình Ảnh</label>
+        <input type="file" id="category-image" name="category-image">
+        <div>
+            <button type="submit" class="save-btn">Lưu</button>
+            <button type="button" class="cancel-btn" onclick="closePopup()">Hủy</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Giới hạn mô tả
+    const CHAR_LIMIT = 20;
+    document.querySelectorAll('.product-description').forEach(desc => {
+        const fullText = desc.getAttribute('data-full-description');
+        if (fullText.length > CHAR_LIMIT) {
+            const shortText = fullText.slice(0, CHAR_LIMIT) + '...';
+            desc.innerHTML = `${shortText} <span class="details-link" onclick="showDetails('${fullText.replace(/'/g, "\\'")}')">Chi tiết</span>`;
+        } else {
+            desc.textContent = fullText;
+        }
+    });
+    
+    document.querySelectorAll('.product-description1').forEach(desc => {
+        const fullText = desc.getAttribute('data-full-description');
+        if (fullText.length > 20) {
+            const shortText = fullText.slice(0, 20) + '...';
+            desc.innerHTML = `${shortText} <span class="details-link" onclick="showDetails('${fullText.replace(/'/g, "\\'")}')">Chi tiết</span>`;
+        } else {
+            desc.textContent = fullText;
+        }
+    });
+
+    // Hiển thị popup chi tiết
+    function showDetails(content) {
+        document.getElementById('popup-content').innerText = content;
+        document.getElementById('popup-overlay').style.display = 'block';
+        document.getElementById('details-popup').style.display = 'block';
+    }
+
+    // Đóng popup chi tiết
+    function closePopupDetail() {
+        document.getElementById('popup-overlay').style.display = 'none';
+        document.getElementById('details-popup').style.display = 'none';
+    }
+
+    // Hiển thị popup thêm danh mục
+    function openAddPopup() {
+        document.getElementById('popup-overlay').style.display = 'block';
+        document.getElementById('add-popup').style.display = 'block';
+    }
+
+    // Đóng popup thêm danh mục
+    function closeAddPopup() {
+        document.getElementById('popup-overlay').style.display = 'none';
+        document.getElementById('add-popup').style.display = 'none';
+    }
+
+    // Hiển thị popup sửa danh mục
+    function openPopup(id, name, quantity, describe, type_product, price) {
+        // Cập nhật các trường dữ liệu
+        document.getElementById('category-name').value = name;  // Tên sản phẩm
+        document.getElementById('idsp').value = id;  // ID sản phẩm
+        document.getElementById('soluong').value = quantity;  // Số lượng
+        document.getElementById('mota').value = describe;  // Mô tả sản phẩm
+        document.getElementById('dongia').value = price;  // Mô tả sản phẩm
+
+        // Hiển thị popup
+        document.getElementById('popup-overlay').style.display = 'block';
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    // Đóng popup sửa danh mục
+    function closePopup() {
+        document.getElementById('popup-overlay').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    // Lưu thay đổi sửa danh mục
+    function saveChanges() {
+        alert('Thông tin đã được lưu!');
+        closePopup();
+    }
+
+    // Bộ lọc
+    function filterTable() {
+        const input = document.getElementById('filter-input');
+        const filter = input.value.toLowerCase();
+        const rows = document.querySelectorAll('#product-table tbody tr');
+        rows.forEach(row => {
+            const name = row.cells[1]?.innerText.toLowerCase();
+            row.style.display = name.includes(filter) ? '' : 'none';
+        });
+    }
+
+    // Xóa lọc
+    function clearFilter() {
+        document.getElementById('filter-input').value = '';
+        filterTable();
+    }
+</script>
+{% endblock %}

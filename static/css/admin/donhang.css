@@ -1,0 +1,83 @@
+/*.order-container {
+    width: 80%;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+*/
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filter-status, .filter-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-status select, .filter-date input {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #f8f9fa;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+td:nth-child(1), td:nth-child(2), :nth-child(5), td:nth-child(6) {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+.checkbox-button {
+    margin-left: 10px;
+}
+
+.checkbox-total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.checkbox-total label {
+    margin-right: 10px;
+}
+
+.stop-btn {
+    text-decoration: none;
+    color: white;
+    padding: 4px 4px;
+    border-radius: 5px;
+    cursor: pointer;
+}

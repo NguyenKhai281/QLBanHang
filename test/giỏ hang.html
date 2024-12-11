@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .product-detail {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-image {
+            width: 40%;
+            padding: 20px;
+        }
+        .product-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .product-info {
+            padding: 20px;
+            width: 60%;
+        }
+        .product-info h1 {
+            font-size: 2rem;
+            margin: 0 0 20px 0;
+        }
+        .product-info p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .product-info .price {
+            font-size: 1.5rem;
+            color: green;
+            margin: 20px 0;
+        }
+        .product-info input[type="number"] {
+            padding: 8px;
+            font-size: 1rem;
+            width: 60px;
+            margin-right: 20px;
+        }
+        .product-info button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .product-info button:hover {
+            background-color: #45a049;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Popup Style */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+        }
+        .popup-content input,
+        .popup-content button {
+            width: 94%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .popup-content button {
+            width: 30%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .popup-content button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Product Detail Section -->
+    <div class="product-detail">
+        <!-- Product Image -->
+        <div class="product-image">
+            <img src="https://via.placeholder.com/400x400" alt="Product Image">
+        </div>
+
+        <!-- Product Information -->
+        <div class="product-info">
+            <h1>Điện Thoại XYZ</h1>
+            <p>Điện thoại XYZ với màn hình 6.5 inch, bộ xử lý Snapdragon, camera 48MP và dung lượng pin 4000mAh. Đây là lựa chọn tuyệt vời cho mọi nhu cầu sử dụng hằng ngày.</p>
+            <p class="price">Giá: 8.000.000 VND</p>
+
+            <!-- Quantity and Buttons -->
+            <div class="quantity">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
+            </div>
+            
+            <!-- Buttons -->
+            <div class="buttons">
+                <button onclick="addToCart()">Thêm vào giỏ hàng</button>
+                <button onclick="buyNow()">Mua ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Form to Fill Delivery Information -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>Thông Tin Giao Hàng</h2>
+            <form id="delivery-form">
+                <label for="name">Họ và Tên:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="address">Địa chỉ:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <div>
+                    <button type="submit">Xác nhận</button>
+                    <button type="button" onclick="closePopup()" style="background-color: #e73939;">Hủy</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle adding to cart
+        function addToCart() {
+            const quantity = document.getElementById('quantity').value;
+            alert(`Bạn đã thêm ${quantity} sản phẩm vào giỏ hàng.`);
+        }
+
+        // Function to handle the 'Buy Now' action and show the popup
+        function buyNow() {
+            const quantity = document.getElementById('quantity').value;
+            document.getElementById('popup').style.display = 'flex';  // Show popup
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';  // Hide popup
+        }
+
+    </script>
+
+</body>
+</html>

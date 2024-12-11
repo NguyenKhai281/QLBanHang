@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách đơn hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .order-container {
+            width: 80%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-status, .filter-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-status select, .filter-date input {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td:nth-child(5) {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .checkbox-button {
+            margin-left: 10px;
+        }
+
+        .checkbox-total {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .checkbox-total label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <h2>Danh sách đơn hàng</h2>
+
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <div class="filter-status">
+                <label for="status-filter">Lọc trạng thái:</label>
+                <select id="status-filter" onchange="filterOrders()">
+                    <option value="all">Tất cả</option>
+                    <option value="pending">Đơn đợi duyệt</option>
+                    <option value="shipped">Đơn đi</option>
+                    <option value="canceled">Đơn hủy</option>
+                </select>
+            </div>
+            <div class="filter-date">
+                <label for="date-filter">Lọc theo ngày đặt:</label>
+                <input type="date" id="date-filter" onchange="filterOrders()">
+            </div>
+        </div>
+
+        <!-- Checkbox Total -->
+        <div class="checkbox-total">
+            <label for="select-all">Chọn tất cả:</label>
+            <input type="checkbox" id="select-all" onclick="toggleAllCheckboxes(this)">
+        </div>
+
+        <!-- Order Table -->
+        <table id="order-table">
+            <thead>
+                <tr>
+                    <th>Chọn</th> <!-- Cột chọn checkbox -->
+                    <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Địa chỉ đặt</th>
+                    <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="order-row" data-status="pending" data-date="2024-11-15">
+                    <td><input type="checkbox" name="order-checkbox" class="order-checkbox"></td> 
+                    <td>1</td>
+                    <td>Điện thoại</td>
+                    <td>2</td>
+                    <td>Hà Nội</td>
+                    <td>2024-11-15</td>
+                    <td>Đơn đợi duyệt</td>
+                </tr>
+                <tr class="order-row" data-status="shipped" data-date="2024-11-14">
+                    <td><input type="checkbox" name="order-checkbox" class="order-checkbox"></td>
+                    <td>2</td>
+                    <td>Laptop</td>
+                    <td>1</td>
+                    <td>Hồ Chí Minh</td>
+                    <td>2024-11-14</td>
+                    <td>Đơn đi</td>
+                </tr>
+                <tr class="order-row" data-status="canceled" data-date="2024-11-13">
+                    <td><input type="checkbox" name="order-checkbox" class="order-checkbox"></td>
+                    <td>3</td>
+                    <td>Máy tính bảng</td>
+                    <td>3</td>
+                    <td>Đà Nẵng</td>
+                    <td>2024-11-13</td>
+                    <td>Đơn hủy</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function filterOrders() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            const rows = document.querySelectorAll('.order-row');
+
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                const orderDate = row.getAttribute('data-date');
+                let statusMatch = (statusFilter === 'all' || status === statusFilter);
+                let dateMatch = (dateFilter === '' || orderDate === dateFilter);
+
+                if (statusMatch && dateMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle the checkboxes based on the "select all" checkbox
+        function toggleAllCheckboxes(selectAllCheckbox) {
+            const checkboxes = document.querySelectorAll('.order-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked; // Check or uncheck all checkboxes based on the "select all"
+            });
+        }
+
+        // When an individual checkbox is clicked, toggle all other checkboxes' states
+        document.querySelectorAll('.order-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('.order-checkbox');
+                const allChecked = Array.from(checkboxes).every(c => c.checked);
+
+                document.getElementById('select-all').checked = allChecked; // Update the "select all" checkbox
+                document.getElementById('select-all').indeterminate = !allChecked && Array.from(checkboxes).some(c => c.checked); // Show indeterminate if some but not all are checked
+            });
+        });
+    </script>
+</body>
+</html>

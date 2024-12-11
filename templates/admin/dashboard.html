@@ -1,0 +1,83 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Sản phẩm-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/dashboard.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container1">
+    <h2 style="text-align: center; color: red;">Báo Cáo Thống Kê</h2>
+
+    
+    <div class="stats-container">
+        <!-- Tổng tiền -->
+        <div class="stat-box">
+            <h2>Tổng Tiền</h2>
+            <p class="total-money">1,500,000 VNĐ</p> <!-- Tổng tiền -->
+        </div>
+
+        <!-- Tiền nhận -->
+        <div class="stat-box">
+            <h2>Tiền Nhận</h2>
+            <p class="total-money-received">1,200,000 VNĐ</p> <!-- Tiền nhận -->
+        </div>
+
+        <!-- Tiền đợi đối soát -->
+        <div class="stat-box">
+            <h2>Tiền Đợi Đối Soát</h2>
+            <p class="total-money-pending">300,000 VNĐ</p> <!-- Tiền đợi đối soát -->
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <!-- Tổng đơn đi -->
+        <div class="stat-box">
+            <h2>Tổng Đơn Đi</h2>
+            <p>150</p> <!-- Thay số này bằng dữ liệu thực tế -->
+        </div>
+
+        <!-- Tổng đơn đợi duyệt -->
+        <div class="stat-box">
+            <h2>Tổng Đơn Đợi Duyệt</h2>
+            <p>40</p> <!-- Thay số này bằng dữ liệu thực tế -->
+        </div>
+
+        <!-- Tổng đơn hủy -->
+        <div class="stat-box">
+            <h2>Tổng Đơn Hủy</h2>
+            <p>30</p> <!-- Thay số này bằng dữ liệu thực tế -->
+        </div>
+
+        <!-- Tổng đơn đã giao -->
+        <div class="stat-box">
+            <h2>Tổng Đơn Đã Giao</h2>
+            <p>100</p> <!-- Thay số này bằng dữ liệu thực tế -->
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <!-- Tổng tiền -->
+        <div class="stat-box">
+            <h2>Tổng Số Sản Phẩm</h2>
+            <p class="total-money">10</p> <!-- Tổng tiền -->
+        </div>
+
+        <!-- Tiền nhận -->
+        <div class="stat-box">
+            <h2>Tổng Số Danh Mục</h2>
+            <p class="total-money-received">10</p> <!-- Tiền nhận -->
+        </div>
+
+        <!-- Tiền đợi đối soát -->
+        <div class="stat-box">
+            <h2>Tổng Số Tin Tức</h2>
+            <p class="total-money-pending">10</p> <!-- Tiền đợi đối soát -->
+        </div>
+    </div><br>
+
+    <div class="footer">
+        <p>© 2024 Thống kê Đơn hàng - Tất cả các quyền được bảo lưu.</p>
+    </div>
+</div>
+{% endblock %}

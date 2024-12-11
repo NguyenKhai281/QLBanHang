@@ -1,0 +1,31 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Sản phẩm-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/taikhoancanhan.css') }}">
+{% endblock %}
+{% block content %}
+<h2 style="text-align: center; color: red;">Thông tin tài khoản</h2>
+<!-- Thẻ chứa thông tin -->
+<div class="profile-card">
+    <img src="{{ url_for('static', filename='img/' + listtaikhoan['img']) }}" alt="Ảnh đại diện">
+    <h2>{{ listtaikhoan['fullname'] }}</h2>
+    <p class="info-item">
+        <i>&#127970;</i> <!-- Biểu tượng nhà -->
+        Địa chỉ: {{ listtaikhoan['address'] }}
+    </p>
+    <p class="info-item">
+        <i>&#9742;</i> <!-- Biểu tượng điện thoại -->
+        Số điện thoại: {{ listtaikhoan['phone'] }}
+    </p>
+    <p class="info-item">
+        <i>&#9993;</i> <!-- Biểu tượng email -->
+        Email: {{ listtaikhoan['email'] }}
+    </p>
+    <p class="info-item">
+        <i>&#128712;</i> <!-- Biểu tượng giới thiệu -->
+        Introduction: {{ listtaikhoan['introduction'] }}
+    </p>
+</div>
+{% endblock %}

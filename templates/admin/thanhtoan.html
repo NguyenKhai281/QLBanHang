@@ -1,0 +1,133 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Sản phẩm-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/thanhtoan.css') }}">
+{% endblock %}
+{% block content %}
+<div class="payment-container">
+    <h2 style="text-align: center; color: red;">Danh sách Thanh Toán</h2>
+    <!-- Phương thức thanh toán -->
+    <div class="payment-methods">
+        <h2>Phương thức Thanh Toán</h2>
+        <ul>
+            {% for i in payment_methods %}
+                {% if i['glob']=='11'%}
+                    <li>
+                        {% if i['status']=='true'%}
+                            <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=true" style="text-decoration: none;">Tạm dừng</a>
+                        {% else %} 
+                            <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=false" style="text-decoration: none;">Hoạt động</a>
+                        {% endif %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;<label for="cash-payment">{{ i['chutaikhoan'] }}</label>
+                    </li>
+                {% elif i['glob']=='22' %} 
+                    <li>
+                        {% if i['status']=='true'%}
+                            <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=true" style="text-decoration: none;">Tạm dừng</a>
+                        {% else %} 
+                            <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=false" style="text-decoration: none;">Hoạt động</a>
+                        {% endif %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;<label for="bank-payment">{{ i['chutaikhoan'] }}</label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Danh sách tài khoản ngân hàng -->
+    <div class="bank-account-list" id="bank-account-section">
+        <h3>Danh sách tài khoản liên kết</h3>
+        <button class="add-account-btn" onclick="openPopup()">Thêm Tài Khoản</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Chọn</th>
+                    <th>Số tài khoản</th>
+                    <th>Chủ tài khoản</th>
+                    <th>Tên ngân hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>QR Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in payment_methods %}
+                    {% if i['glob']=='' %}
+                        <tr>
+                            <td>
+                                {% if i['status']=='true' %}
+                                <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=true" style="text-decoration: none;">Tạm dừng</a>
+                                {% endif %}
+                                {% if i['status']=='false' %}
+                                <a class="delete-btn" href="/admin/cappheppayment_methods/{{ i['id'] }}?action=false" style="text-decoration: none;">Hoạt động</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ i['stk'] }}</td>
+                            <td>{{ i['chutaikhoan'] }}</td>
+                            <td>{{ i['tennganhang'] }}</td>
+                            <td>{{ i['create_date'] }}</td>
+                            <td>
+                                <img src="{{ url_for('static', filename='img/payment_methods/' + i['img']) }}" alt="QR Code 1">
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Popup thêm tài khoản -->
+<div class="overlay" id="popup-overlay" onclick="closePopup()"></div>
+<div class="popup" id="add-account-popup">
+    <h3>Thêm Tài Khoản</h3>
+    <form id="add-category-form" action="/admin/themthanhtoan" method="POST" enctype="multipart/form-data">
+    <input type="text" id="account-number" placeholder="Số tài khoản" name="stk">
+    <input type="text" id="account-owner" placeholder="Chủ tài khoản" name="ctk">
+    <input type="text" id="bank-name" placeholder="Tên ngân hàng" name="tnh">
+    <input type="file" id="imgInput" accept="image/*" name="imgInput">
+    <img id="imgPreview" style="display: none; max-height: 160px; max-width: 170px;" alt="Xem trước ảnh">
+    <div class="popup-buttons">
+        <button class="save-btn" type="submit">Lưu</button>
+        <button class="cancel-btn" type="button" onclick="closePopup()">Hủy</button>
+    </div>
+    </form>
+</div><br>
+
+<script>    
+    function openPopup() {
+        document.getElementById('add-account-popup').style.display = 'block';
+        document.getElementById('popup-overlay').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('add-account-popup').style.display = 'none';
+        document.getElementById('popup-overlay').style.display = 'none';
+    }
+
+    // Lấy input và vùng preview
+    const imgInput = document.getElementById('imgInput');
+    const imgPreview = document.getElementById('imgPreview');
+    const noImageText = document.getElementById('no-image');
+
+    // Sự kiện khi chọn file
+    imgInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block';
+                noImageText.style.display = 'none';
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            imgPreview.style.display = 'none';
+            noImageText.style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

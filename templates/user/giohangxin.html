@@ -1,0 +1,113 @@
+{% extends "user/include/menu.html" %}
+{% block title %}Tien Duc shop{% endblock %}
+{% block csslink %}<link rel="stylesheet" href="{{ url_for('static', filename='css/user/giohangxin.css') }}">{% endblock %}
+{% block content %}
+<div class="cart-container">
+    <h1>Giỏ Hàng</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in listgiohang %}
+            <tr>
+                <td>
+                    {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            <img src="{{ url_for('static', filename='img/products/' + j['img']) }}" alt="Điện thoại XYZ">
+                            {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            {{ j['nameproduct'] }}
+                            {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in listsanpham %}
+                        {% if i['id_product'] == j['id'] %}
+                        {{ j['price'] }}đ
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ i['quantity'] }}</td>
+                <td>
+                    {% for j in listsanpham %}
+                        {% if i['id_product'] == j['id'] %}
+                        {{ j['price'] * i['quantity'] }}đ
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="actions">
+                    <a href="/buy/{{ i['id'] }}" class="buy-btn">Mua</a>
+                    <a href="/cancel/{{ i['id'] }}" class="cancel-btn">Hủy</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="cart-container">
+    <h1>Sản Phẩm Đã Mua</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in listgiohang1 %}
+            <tr>
+                <td>
+                    {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            <img src="{{ url_for('static', filename='img/products/' + j['img']) }}" alt="Điện thoại XYZ">
+                            {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            {{ j['nameproduct'] }}
+                            {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for j in listsanpham %}
+                        {% if i['id_product'] == j['id'] %}
+                        {{ j['price'] }}đ
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ i['quantity'] }}</td>
+                <td>
+                    {% for j in listsanpham %}
+                        {% if i['id_product'] == j['id'] %}
+                        {{ j['price'] * i['quantity'] }}đ
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="actions">
+                    {{ i['status'] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "user/include/menu.html" %}
+{% block title %}Tien Duc shop{% endblock %}
+{% block csslink %}<link rel="stylesheet" href="{{ url_for('static', filename='css/user/chititetsp.css') }}">{% endblock %}
+{% block content %}
+<!-- Product Detail Section -->
+<div class="product-detail">
+    <!-- Product Image -->
+    <div class="product-image">
+        <img src="{{ url_for('static', filename='img/products/' + listsanpham['img']) }}" alt="Product Image">
+    </div>
+
+    <!-- Product Information -->
+    <div class="product-info">
+        <h1>{{ listsanpham['nameproduct'] }}</h1>
+        <p>{{ listsanpham['describe'] }}</p>
+        <p class="price">{{ listsanpham['price'] }}</p>
+
+        <!-- Quantity and Buttons -->
+        <form action="/addToCart" method="POST" enctype="multipart/form-data">
+            <div class="quantity">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
+                <input type="hidden" id="id_account" name="id_account" value="{{ session['id'] }}">
+                <input type="hidden" id="id_sp" name="id_sp" value="{{ listsanpham['id'] }}">
+            </div>
+            
+            <!-- Buttons -->
+            <div class="buttons">
+                <button type="submit">Thêm vào giỏ hàng</button>
+                <button type="button" onclick="buyNow()">Mua ngay</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Popup Form to Fill Delivery Information -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Thông Tin Giao Hàng</h2>
+        <form id="delivery-form" action="/buyNow" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="idsp" name="idsp" value="{{ listsanpham['id'] }}">
+            <input type="hidden" id="id_account" name="id_account" value="{{ session['id'] }}">
+            <label for="name">Họ và Tên:</label>
+            <input type="text" id="name" name="name" required value="{{ session['fullname'] }}">
+
+            <label for="sp">Sản phẩm:</label>
+            <input type="text" id="sp" name="sp" required readonly value="{{ listsanpham['nameproduct'] }}">
+
+            <label for="sp">Số lượng:</label>
+            <input type="text" id="sl" name="sl" required readonly>
+
+            <label for="address">Địa chỉ nhận hàng:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="address_detail">Địa chỉ chi tiết:</label>
+            <input type="text" id="address_detail" name="address_detail" required>
+
+            <div>
+                <button type="submit">Xác nhận</button>
+                <button type="button" onclick="closePopup()" style="background-color: #e73939;">Hủy</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<script>
+
+    // Function to handle the 'Buy Now' action and show the popup
+    function buyNow() {
+        const quantity = document.getElementById('quantity').value;
+        document.getElementById('sl').value = quantity;
+        document.getElementById('popup').style.display = 'flex';  // Show popup
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';  // Hide popup
+    }
+
+</script>
+{% endblock %}

@@ -1,0 +1,171 @@
+.payment-container {
+    width: 96%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* Tiêu đề */
+.payment-container h1 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* Phương thức thanh toán */
+.payment-methods {
+    margin: 20px 0;
+}
+
+.payment-methods h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.payment-methods ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.payment-methods ul li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+}
+
+.payment-methods ul li input {
+    margin-right: 10px;
+}
+
+/* Danh sách tài khoản ngân hàng */
+.bank-account-list h3 {
+    margin-top: 15px;
+    color: #007bff;
+}
+
+.bank-account-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bank-account-list table th, 
+.bank-account-list table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.bank-account-list table th {
+    background: #007bff;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.bank-account-list table tr:hover {
+    background: #f1f1f1;
+}
+
+.bank-account-list table td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.bank-account-list table td input {
+    margin-right: 10px;
+}
+
+/* Nút thêm tài khoản */
+.add-account-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-account-btn:hover {
+    background: #0056b3;
+}
+
+/* Popup thêm tài khoản */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 400px;
+}
+
+.popup h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.popup input {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.popup-buttons button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-buttons .save-btn {
+    background: #007bff;
+    color: white;
+}
+
+.popup-buttons .cancel-btn {
+    background: #ccc;
+}
+
+.popup-buttons .save-btn:hover {
+    background: #0056b3;
+}
+
+.popup-buttons .cancel-btn:hover {
+    background: #aaa;
+}
+
+
+img.qrcode {
+    width: 50px;
+    height: 50px;
+}

@@ -1,0 +1,139 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Danh mục-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/donhang.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="order-container">
+        <h2 style="text-align: center; color: red;">Danh sách đơn hàng</h2>
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <div class="filter-status">
+                <label for="status-filter">Lọc trạng thái:</label>
+                <select id="status-filter" onchange="filterOrders()">
+                    <option value="all">Tất cả</option>
+                    <option value="pending">Đơn đợi duyệt</option>
+                    <option value="shipped">Đã duyệt</option>
+                    <option value="canceled">Đã hủy</option>
+                </select>
+            </div>
+            <div class="filter-date">
+                <label for="date-filter">Lọc theo ngày đặt:</label>
+                <input type="date" id="date-filter" onchange="filterOrders()">
+            </div>
+        </div>
+
+        <!-- Checkbox Total -->
+        <div class="checkbox-total">
+            <label for="select-all">Chọn tất cả:</label>
+            <input type="checkbox" id="select-all" onclick="toggleAllCheckboxes(this)">
+        </div>
+
+        <!-- Order Table -->
+        <table id="order-table">
+            <thead>
+                <tr>
+                    <th>Chọn</th> <!-- Cột chọn checkbox -->
+                    <th>STT</th>
+                    <th>Người đặt</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Địa chỉ đặt</th>
+                    <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in listdonhang %}
+                <tr class="order-row" data-status="pending" data-date="2024-11-15">
+                    <td><input type="checkbox" name="order-checkbox" class="order-checkbox"></td> 
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        {% for j in account_user %}
+                            {% if i['id_account'] == j['id'] %}
+                            {{ j['fullname'] }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            {{ j['nameproduct'] }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ i['quantity'] }}</td>
+                    <td>
+                        {% for j in listsanpham %}
+                            {% if i['id_product'] == j['id'] %}
+                            {{ j['price'] * i['quantity'] }}đ
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for j in address_delivery %}
+                            {% if i['address_delivery'] == j['id'] %}
+                            {{ j['address'] }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ i['create_day'] }}</td>
+                    <td>
+                        {% if i['status'] == 'Processing' %}
+                            <a class="stop-btn" href="/admin/suatrangthaidonhang/{{ i['id'] }}?action=Confirmed" style="text-decoration: none; background-color: green;">Duyệt</a>
+                            <a class="stop-btn" href="/admin/suatrangthaidonhang/{{ i['id'] }}?action=Cancelled" style="text-decoration: none; background-color: red;">Hủy</a>                        
+                        {% elif i['status'] == 'Cancelled' %}
+                            <a class="stop-btn" href="#" style="text-decoration: none;">Đã hủy</a>
+                        {% elif i['status'] == 'Confirmed' %}
+                            <a class="stop-btn" href="#" style="text-decoration: none; background-color: green;">Đã duyệt</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function filterOrders() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            const rows = document.querySelectorAll('.order-row');
+
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                const orderDate = row.getAttribute('data-date');
+                let statusMatch = (statusFilter === 'all' || status === statusFilter);
+                let dateMatch = (dateFilter === '' || orderDate === dateFilter);
+
+                if (statusMatch && dateMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle the checkboxes based on the "select all" checkbox
+        function toggleAllCheckboxes(selectAllCheckbox) {
+            const checkboxes = document.querySelectorAll('.order-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked; // Check or uncheck all checkboxes based on the "select all"
+            });
+        }
+
+        // When an individual checkbox is clicked, toggle all other checkboxes' states
+        document.querySelectorAll('.order-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('.order-checkbox');
+                const allChecked = Array.from(checkboxes).every(c => c.checked);
+
+                document.getElementById('select-all').checked = allChecked; // Update the "select all" checkbox
+                document.getElementById('select-all').indeterminate = !allChecked && Array.from(checkboxes).some(c => c.checked); // Show indeterminate if some but not all are checked
+            });
+        });
+    </script>
+{% endblock %} 

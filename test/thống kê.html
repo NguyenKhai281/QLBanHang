@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê Đơn hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #007bff;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            width: 18%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-box h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .stat-box p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .stat-box .total-money {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .total-money-pending {
+            color: #ffc107;
+        }
+
+        .total-money-received {
+            color: #28a745;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Thống kê Đơn hàng</h1>
+        </div>
+
+        <div class="stats-container">
+            <!-- Tổng đơn đi -->
+            <div class="stat-box">
+                <h2>Tổng Đơn Đi</h2>
+                <p>150</p> <!-- Thay số này bằng dữ liệu thực tế -->
+            </div>
+
+            <!-- Tổng đơn đợi duyệt -->
+            <div class="stat-box">
+                <h2>Tổng Đơn Đợi Duyệt</h2>
+                <p>40</p> <!-- Thay số này bằng dữ liệu thực tế -->
+            </div>
+
+            <!-- Tổng đơn hủy -->
+            <div class="stat-box">
+                <h2>Tổng Đơn Hủy</h2>
+                <p>30</p> <!-- Thay số này bằng dữ liệu thực tế -->
+            </div>
+
+            <!-- Tổng đơn đã giao -->
+            <div class="stat-box">
+                <h2>Tổng Đơn Đã Giao</h2>
+                <p>100</p> <!-- Thay số này bằng dữ liệu thực tế -->
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <!-- Tổng tiền -->
+            <div class="stat-box">
+                <h2>Tổng Tiền</h2>
+                <p class="total-money">1,500,000 VNĐ</p> <!-- Tổng tiền -->
+            </div>
+
+            <!-- Tiền nhận -->
+            <div class="stat-box">
+                <h2>Tiền Nhận</h2>
+                <p class="total-money-received">1,200,000 VNĐ</p> <!-- Tiền nhận -->
+            </div>
+
+            <!-- Tiền đợi đối soát -->
+            <div class="stat-box">
+                <h2>Tiền Đợi Đối Soát</h2>
+                <p class="total-money-pending">300,000 VNĐ</p> <!-- Tiền đợi đối soát -->
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Thống kê Đơn hàng - Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </div>
+
+</body>
+</html>

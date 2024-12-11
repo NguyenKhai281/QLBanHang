@@ -1,0 +1,57 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Sản phẩm-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/tintuc.css') }}">
+{% endblock %}
+{% block content %}
+<h2 style="text-align: center; color: red;">Danh sách tin tức</h2>
+
+<!-- Danh sách tin tức -->
+<ul class="news-list">
+    <!-- Tin tức mẫu -->
+    {% for i in listtintuc %}
+        <li class="news-item">
+            <img src="{{ url_for('static', filename='img/news/' + i['img']) }}" alt="Tin tức 1">
+            <div>
+                <h3>{{ i['title'] }}</h3>
+                <p>{{ i['content'] }}</p><br>
+                <a class="delete-btn" href="/admin/xoatintuc/{{ i['id'] }}" style="text-decoration: none;">Xóa</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul><br>
+
+<!-- Popup tạo tin tức -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Tạo Tin Tức Mới</h2>
+        <form id="add-category-form" action="/admin/themtintuc" method="POST" enctype="multipart/form-data">
+            <input type="text" id="title" placeholder="Tiêu đề tin tức" name="title">
+            <input type="file" id="image" accept="image/*" placeholder="Chọn hình ảnh" name="image">
+            <textarea id="description" placeholder="Mô tả tin tức" name="description"></textarea>
+            <button type="submit">Lưu</button>
+            <button type="button" class="close-btn" onclick="closePopup()">Đóng</button>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<!-- Nút Tạo Tin Tức -->
+<button class="create-news-btn" onclick="openPopup()">Tạo mới</button>
+
+<script>
+// Mở Popup
+function openPopup() {
+    document.getElementById('popup').style.display = 'flex';
+}
+
+// Đóng Popup
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+</script>
+{% endblock %}

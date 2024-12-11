@@ -1,0 +1,158 @@
+{% extends "admin/includes/menu.html" %}
+{% block title %}Danh mục-Admin{% endblock %}
+{% block shop_name %}{{session['Shop_name']}}{% endblock %}
+{% block fullname %}{{ session['fullname'] }}{% endblock %}
+{% block link_style_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/danhmuc.css') }}">
+{% endblock %}
+{% block content %}
+    <h2 style="text-align: center; color: red;">Danh mục loại sản phẩm</h2>
+    <!-- Filter Section -->
+    <div class="filter-container">
+        <div class="filter-input-container">
+            <input 
+                type="text" 
+                id="filter-input" 
+                class="filter-input" 
+                placeholder="Nhập tên danh mục để tìm kiếm..." 
+                onkeyup="filterTable()">
+            <i class="fas fa-search filter-icon"></i>
+        </div>
+        <div class="action-buttons">
+            <button class="clear-btn" onclick="clearFilter()">Xóa lọc</button>
+            <button class="add-btn" onclick="openAddPopup()">Thêm danh mục</button>
+        </div>
+    </div>
+
+    <table class="product-category-table" id="product-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Danh mục</th>
+                <th>Hình ảnh</th>
+                <th>Ngày tạo</th>
+                <th>Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody id="danhmuc-container">
+            {% for i in listdanhmuc %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ i['nameproduct'] }}</td>
+                <td>
+                    <img src="{{ url_for('static', filename='img/type_product/' + i['img']) }}" alt="Điện thoại" class="product-image">
+                </td>
+                <td>{{ i['Create_date'] }}</td>
+                <td>
+                    <button class="edit-btn" onclick="openPopup('{{ i['id'] }}', '{{ i['nameproduct'] }}', '{{ i['img'] }}')">Sửa</button>
+                    <a class="delete-btn" href="/admin/xoadanhmuc/{{ i['id'] }}" style="text-decoration: none;">Xóa</a>
+                    {% if i['status'] == 'true' %}
+                        <a class="stop-btn" href="/admin/suatrangthai/{{ i['id'] }}?status={{ i['status'] }}" style="text-decoration: none;">Tạm dừng</a>
+                    {% else %}
+                        <a class="stop-btn" href="/admin/suatrangthai/{{ i['id'] }}?status={{ i['status'] }}" style="text-decoration: none;">Khởi động</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add Popup -->
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="add-popup">
+        <h3>Thêm Danh Mục</h3>
+        <form id="add-category-form" action="/admin/themdanhmuc" method="POST" enctype="multipart/form-data">
+            <label for="new-category-name">Tên Danh Mục</label>
+            <input type="text" id="new-category-name" name="new-category-name">
+            <label for="new-category-image">Hình Ảnh</label>
+            <input type="file" id="new-category-image" name="new-category-image">
+            <div>
+                <button type="submit" class="save-btn">Lưu</button>
+                <button type="button" class="cancel-btn" onclick="closeAddPopup()">Hủy</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup and Overlay -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h3>Sửa Danh Mục</h3>
+        <form id="add-category-form" action="/admin/suadanhmuc" method="POST" enctype="multipart/form-data">
+            <label for="category-name">Tên Danh Mục</label>
+            <input type="hidden" name="category-id" id="category-id">
+            <input type="hidden" name="category-img" id="category-img">
+            <input type="text" id="category-name" name="category-name">
+            <label for="category-image">Hình Ảnh</label>
+            <input type="file" id="category-image" name="category-image">
+            <div>
+                <button type="submit" class="save-btn">Lưu</button>
+                <button type="button" class="cancel-btn" onclick="closePopup()">Hủy</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function openAddPopup() {
+            document.getElementById('popup-overlay').style.display = 'block';
+            document.getElementById('add-popup').style.display = 'block';
+        }
+
+        function closeAddPopup() {
+            document.getElementById('popup-overlay').style.display = 'none';
+            document.getElementById('add-popup').style.display = 'none';
+        }
+
+        function saveNewCategory() {
+            const name = document.getElementById('new-category-name').value;
+            if (name.trim() === '') {
+                alert('Vui lòng nhập tên danh mục!');
+                return;
+            }
+
+            // Logic để thêm danh mục mới vào bảng (nếu cần)
+            alert(`Danh mục "${name}" đã được thêm!`);
+            closeAddPopup();
+        }
+
+        function filterTable() {
+            const input = document.getElementById('filter-input');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('product-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const categoryName = cells[1]?.textContent || cells[1]?.innerText;
+
+                if (categoryName.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+
+        function clearFilter() {
+            const input = document.getElementById('filter-input');
+            input.value = '';
+            filterTable();
+        }
+
+        function openPopup(id, name, img) {
+            document.getElementById('category-id').value = id;
+            document.getElementById('category-name').value = name;
+            document.getElementById('category-img').value = img;
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+    </script>
+
+    <!-- Font Awesome Icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %} 

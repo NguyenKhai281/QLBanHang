@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Cá Nhân</title>
+    <style>
+        /* Reset cơ bản */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Thẻ chứa thông tin */
+        .profile-card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* Ảnh đại diện */
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        /* Tiêu đề */
+        .profile-card h2 {
+            font-size: 24px;
+            color: #007bff;
+            margin: 10px 0;
+        }
+
+        /* Thông tin cá nhân */
+        .profile-card p {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        /* Thông tin có biểu tượng */
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .info-item i {
+            font-size: 20px;
+            color: #007bff;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thẻ chứa thông tin -->
+    <div class="profile-card">
+        <img src="http://127.0.0.1:5000/static/img/admin1.jpg" alt="Ảnh đại diện">
+        <h2>Nguyễn Văn A</h2>
+        <p class="info-item">
+            <i>&#127970;</i> <!-- Biểu tượng nhà -->
+            Địa chỉ: 123 Đường ABC, Quận X, TP. HCM
+        </p>
+        <p class="info-item">
+            <i>&#9742;</i> <!-- Biểu tượng điện thoại -->
+            Số điện thoại: 0901 234 567
+        </p>
+        <p class="info-item">
+            <i>&#9993;</i> <!-- Biểu tượng email -->
+            Email: nguyenvana@example.com
+        </p>
+    </div>
+
+</body>
+</html>

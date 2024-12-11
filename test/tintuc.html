@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Tin tức</title>
+    <style>
+        /* Cơ bản */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #007bff;
+        }
+
+        /* Nút tạo tin tức - cố định góc phải */
+        .create-news-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 1000; /* Đảm bảo nút luôn ở trên cùng */
+        }
+
+        .create-news-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Danh sách tin tức theo dạng dọc */
+        .news-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .news-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            align-items: center;
+        }
+
+        .news-item img {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+        .news-item h3 {
+            color: #007bff;
+            margin: 0;
+        }
+
+        .news-item p {
+            color: #333;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup input, .popup textarea {
+            width: 95%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3;
+        }
+
+        .popup .close-btn {
+            background-color: #f44336;
+            padding: 8px 16px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .popup .close-btn:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Tin tức</h1>
+        </div>
+
+        <!-- Danh sách tin tức -->
+<ul class="news-list">
+    <!-- Tin tức mẫu -->
+    <li class="news-item">
+        <img src="https://img.websosanh.vn/v2/users/dclimg/images/d9m4tyv27yzgi.jpg?compress=85" alt="Tin tức 1">
+        <div>
+            <h3>Điện thoại Xiaomi Redmi Note 13 Pro 5G 8GB/128GB 6.67 inch. Giá từ: 3.179.400 đ</h3>
+            <p>Điện thoại Xiaomi Redmi Note 13 Pro 5G tiếp tục nâng cao trải nghiệm của người dùng trong phân khúc tầm trung với hàng loạt các trang bị hiện đại bậc nhất, tối ưu các trải nghiệm của người sử dụng. </p>
+        </div>
+    </li>
+    <li class="news-item">
+        <img src="https://img.websosanh.vn/v2/users/root_product/images/dien-thoai-xiaomi-redmi-note-1/e0f7266d4a954.jpg?width=300" alt="Tin tức 2">
+        <div>
+            <h3>Điện thoại Xiaomi Redmi Note 14 Pro 5G 8GB/128GB. Giá từ: 5.379.000 đ</h3>
+            <p>Xiaomi đưa tới điện thoại Redmi Note 14 Pro Plus 5G pin sử dụng công nghệ pin Silicon – Carbon (viết tắt là Si/C) hoàn toàn mới. Pin Si/C sử dụng trên điện thoại Xiaomi này có mật độ năng lượng đạt tới 814Wh/L, để so sánh thì mật độ năng lượng của pin Li-Ion phổ biến trên smartphone hiện nay chỉ có mật độ năng lượng tối đa là 693 Wh/L.</p>
+        </div>
+    </li>
+    <li class="news-item">
+        <img src="https://clickbuy.com.vn/uploads/pro/xiaomi-redmi-note-13-pro-5g-8gb-128gb-box-bao-hanh-15-thang-lg-197383.png" alt="Tin tức 3">
+        <div>
+            <h3>Xiaomi Redmi Note 13 Pro (5G) 8GB 128GB Box - Bảo hành 15 tháng</h3>
+            <p>Xiaomi Redmi Note 13 Pro là một chiếc điện thoại thông minh tầm trung nổi bật với nhiều tính năng ấn tượng. Máy sở hữu màn hình AMOLED 6.67 inch sắc nét cùng vi xử lý Snapdragon 7s Gen 2 mạnh mẽ. Thiết kế của dòng sản phẩm này rất hiện đại, với kính Corning Gorilla Glass Victus và khả năng chống nước, chống bụi IP54. Đây là một lựa chọn lý tưởng cho người dùng cần một thiết bị hiệu năng tốt, chụp ảnh đẹp và nhiều tính năng tiên tiến.</p>
+        </div>
+    </li>
+</ul>
+
+        <!-- Popup tạo tin tức -->
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <h2>Tạo Tin Tức Mới</h2>
+                <input type="text" id="title" placeholder="Tiêu đề tin tức">
+                <input type="file" id="image" accept="image/*" placeholder="Chọn hình ảnh">
+                <textarea id="description" placeholder="Mô tả tin tức"></textarea>
+                <button onclick="saveNews()">Lưu tin tức</button>
+                <button class="close-btn" onclick="closePopup()">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Nút Tạo Tin Tức -->
+    <button class="create-news-btn" onclick="openPopup()">Tạo Tin Tức</button>
+
+    <script>
+        // Mở Popup
+        function openPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        // Đóng Popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Lưu tin tức
+        function saveNews() {
+            let title = document.getElementById('title').value;
+            let description = document.getElementById('description').value;
+            let image = document.getElementById('image').files[0];
+
+            if (title && description && image) {
+                alert('Tin tức đã được lưu thành công!');
+                closePopup();
+                // Xử lý lưu tin tức (ví dụ: lưu vào cơ sở dữ liệu, gửi yêu cầu tới server, v.v...)
+            } else {
+                alert('Vui lòng nhập đầy đủ thông tin!');
+            }
+        }
+    </script>
+
+</body>
+</html>
